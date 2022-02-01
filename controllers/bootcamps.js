@@ -36,7 +36,7 @@ exports.getbootcamp = asyncHandler(async (req, res, next) => {
 exports.createbootcamp = asyncHandler(async (req, res, next) => {
 
 
-    // Add user to req,body
+    // Add user to req.body
     req.body.user = req.user.id
 
     // Check for published bootcamp

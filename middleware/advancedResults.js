@@ -3,7 +3,7 @@ const advancedResults = (model, populate) => async(req, res, next) => {
 
     // copy reqquery
     const reqQuery = {... req.query} 
-
+    // console.log(reqQuery)
     // fields excluded
     const removefield = ['select', 'sort', 'page', 'limit']
 
@@ -14,12 +14,14 @@ const advancedResults = (model, populate) => async(req, res, next) => {
 
     // create query string
     let queryStr = JSON.stringify(reqQuery)
+    // console.log(queryStr)
 
     // Create Operator
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`)
 
     // Finding resource
     query = model.find(JSON.parse(queryStr))
+    // console.log(query)
     
 
     // select fields
@@ -38,12 +40,18 @@ const advancedResults = (model, populate) => async(req, res, next) => {
 
     // Pagination
     const page = parseInt(req.query.page, 10) || 1
+    // console.log(page);
     const limit = parseInt(req.query.limit, 10) || 25
+    // console.log(limit);
     const startIndex = (page - 1) * limit
+    // console.log(startIndex);
     const endIndex = page * limit
+    // console.log(endIndex)
     const total = await model.countDocuments()
+    // console.log(total)
 
     query = query.skip(startIndex).limit(limit)
+    // console.log(query)
 
     if(populate){
         query = query.populate(populate)

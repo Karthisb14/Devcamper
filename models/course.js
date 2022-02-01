@@ -58,8 +58,8 @@ CourseSchema.statics.getAveragecost = async function (bootcampId) {
         averageCost: { $avg: '$tuition' }
       }
     }
-
   ])
+  // console.log(obj)
 
   try {
 
@@ -70,8 +70,6 @@ CourseSchema.statics.getAveragecost = async function (bootcampId) {
     console.error(err)
   }
 }
-
-
 
 // call getAverage cost after save
 CourseSchema.post('save', function () {

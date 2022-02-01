@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const slugify = require('slugify')
 const geocoder = require('../utilis/geocoder')
 
 const BootcampSchema = new mongoose.Schema({
@@ -10,7 +9,6 @@ const BootcampSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, 'name can not to be more than 50 characters']
     },
-    slug: String,
     description: {
         type: String,
         required: [true, 'please add a description'],
@@ -107,12 +105,6 @@ const BootcampSchema = new mongoose.Schema({
 }, {
     toJSON:{virtuals: true},
     toObject: {virtuals: true}
-})
-
-// Create slug
-BootcampSchema.pre('save', function(next){
-    this.slug = slugify(this.name, {lower: true})
-    next()
 })
 
 // geocoder & create location field
