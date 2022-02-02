@@ -25,10 +25,16 @@ router.use('/:bootcampId/reviews', reviewRouter)
 
 router.route('/radius/:zipcode/:distance').get(getbootcampsinRadius)
 
-router.route('/').get(advancedResults(Bootcamp, 'courses'),getbootcamps).post(protect, authorize('publisher', 'admin'), createbootcamp)
+router.route('/')
+    .get(advancedResults(Bootcamp, 'courses'),getbootcamps)
+    .post(protect, authorize('publisher'), createbootcamp)
 
-router.route('/:id').get(getbootcamp).put(protect, authorize('publisher', 'admin'), updatebootcamp).delete(protect, authorize('publisher', 'admin'),deletebootcamp)
+router.route('/:id')
+    .get(getbootcamp)
+    .put(protect, authorize('publisher'), updatebootcamp)
+    .delete(protect, authorize('publisher'),deletebootcamp)
 
-router.route('/:id/photo').put(protect, authorize('publisher', 'admin'), bootcampphotoupload)
+router.route('/:id/photo')
+    .put(protect, authorize('publisher'), bootcampphotoupload)
 
 module.exports = router

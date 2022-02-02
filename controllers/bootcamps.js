@@ -43,7 +43,7 @@ exports.createbootcamp = asyncHandler(async (req, res, next) => {
     const publishedBootcamp = await Bootcamp.findOne({ user: req.user.id })
 
     // If the user is not an admin, they can only add one bootcamp
-    if (publishedBootcamp && req.user.role !== "admin") {
+    if (publishedBootcamp && req.user.role !== "publisher") {
         return next(
             new errorResponse(
                 `The user with ID ${req.user.id} has already published a bootcamp`,
@@ -52,6 +52,7 @@ exports.createbootcamp = asyncHandler(async (req, res, next) => {
         )
     }
     const bootcamp = await Bootcamp.create(req.body)
+    // console.log(bootcamp)
     res.status(201).json({ success: true, data: bootcamp })
 
 })
@@ -69,7 +70,7 @@ exports.updatebootcamp = asyncHandler(async (req, res, next) => {
     }
 
     // Make sure user is bootcamp owner
-    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "publisher") {
         return next(
             new errorResponse(
                 `User ${req.params.id} is not authorized to update this bootcamp`,
@@ -98,7 +99,7 @@ exports.deletebootcamp = asyncHandler(async (req, res, next) => {
         return next(new errorResponse(`Bootcamp not found with id of ${req.params.id}`, 404))
     }
     // Make sure user is bootcamp owner
-    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "publisher") {
         return next(
             new errorResponse(
                 `User ${req.params.id} is not authorized to delete this bootcamp`,
@@ -148,7 +149,7 @@ exports.bootcampphotoupload = asyncHandler(async (req, res, next) => {
     }
 
     // Make sure user is bootcamp owner
-    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "admin") {
+    if (bootcamp.user.toString() !== req.user.id && req.user.role !== "publisher") {
         return next(
             new errorResponse(
                 `User ${req.params.id} is not authorized to update this bootcamp`,

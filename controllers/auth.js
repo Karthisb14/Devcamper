@@ -35,7 +35,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 
     // Check for user
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email })
 
     if (!user) {
         return next(new errorResponse("Invalid credentials", 401));
@@ -180,7 +180,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 // @access Private
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.user.id).select("+password")
+    const user = await User.findById(req.user.id)
 
     // Check current password
     if (!(await user.matchPassword(req.body.currentPassword))) {
