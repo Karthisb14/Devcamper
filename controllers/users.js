@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const errorResponse = require('../utilis/errorResponse')
 const asyncHandler = require('../middleware/async')
 
 // @desc      Get all users
